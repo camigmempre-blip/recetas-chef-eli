@@ -146,6 +146,17 @@ footer .sig{font:600 28px/1 var(--f-hand);color:var(--ink);display:block;margin-
 .amt{margin-top:8px;width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--ground);color:var(--ink);font:700 17px var(--f-body)}
 .actions{display:grid;gap:4px;margin-top:18px}
 .fine{font-size:12.5px;color:var(--muted);text-align:center;margin-top:6px}
+.amts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.amtb{appearance:none;position:relative;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:14px 4px 10px;font:800 18px var(--f-body);font-variant-numeric:tabular-nums;cursor:pointer}
+.amtb small{display:block;font:600 11.5px var(--f-body);color:var(--muted);margin-top:2px}
+.amtb.rec{border-color:var(--butter)}
+.amtb .tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--butter);color:var(--butter-ink);font:800 10.5px var(--f-body);letter-spacing:.04em;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.amtb[aria-pressed="true"]{border-color:var(--bandana);background:var(--bandana);color:var(--bandana-ink)}
+.amtb[aria-pressed="true"] small{color:var(--bandana-ink)}
+.other{appearance:none;border:0;background:transparent;color:var(--muted);font:700 14px var(--f-body);text-decoration:underline;cursor:pointer;margin-top:8px;padding:2px 0}
+.perk{margin-top:10px;background:color-mix(in srgb, var(--butter) 35%, var(--card));border-radius:12px;padding:10px 12px;font-size:14px;color:var(--ink)}
+.sheet p.proof{margin:10px 0 0;max-width:none;font-size:13.5px;color:var(--muted);text-align:center}
+.letter{font:600 20px/1.25 var(--f-hand);color:var(--ink)!important}
 .thanks{text-align:center;padding-block:8px}
 .thanks .hand{font:600 34px/1 var(--f-hand);color:var(--bandana)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom, 0px));transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px;z-index:30;max-width:calc(100% - 32px);text-align:center}
@@ -247,20 +258,27 @@ footer .sig{font:600 28px/1 var(--f-hand);color:var(--ink);display:block;margin-
         <img src="img/eli.jpg" alt="">
         <h3 id="sh-title">¿Te sirvió? Apoya a Chef Eli</h3>
       </div>
-      <p>Te lo di primero porque confío en ti. Este recetario no tiene precio: si te gustó, tu aporte voluntario me ayuda a seguir creando recetas para ti y para miles de familias.</p>
-      <div class="suggest"><span>Aporte sugerido o voluntario</span><b>Entre $16.000 y $60.000</b><i>lo que salga de tu corazón</i></div>
+      <p class="letter">Te lo entregué primero porque confío en ti. Estas recetas las pruebo en mi cocina una por una, y tu aporte es lo que me deja seguir haciéndolo. Gracias por estar aquí. — Eli</p>
+      <span class="q">Elige tu aporte voluntario</span>
+      <div class="amts" id="amts" role="group" aria-label="Valor del aporte">
+        <button class="amtb" type="button" data-v="20000" aria-pressed="false">$20.000<small>Aporte</small></button>
+        <button class="amtb rec" type="button" data-v="35000" aria-pressed="false"><span class="tag">SUGERIDO</span>$35.000<small>+ bono extra</small></button>
+        <button class="amtb" type="button" data-v="50000" aria-pressed="false">$50.000<small>+ bono extra</small></button>
+      </div>
+      <button class="other" type="button" id="other">Otro valor: lo que salga de tu corazón</button>
+      <input class="amt" id="amt" inputmode="numeric" autocomplete="off" placeholder="Escribe el valor" hidden>
+      <div class="perk">🎁 Al subir tu comprobante se abre un regalo. Desde <b>$35.000</b> te llevas además un <b>recetario extra</b>.</div>
+      <p class="proof">💛 El domingo alguien aportó $50.000 por La Regla de los 30 Gramos.</p>
       <div class="pay">
         <button class="payrow" type="button" data-c="3005426618"><span><small>Llave Bre-B · Chef Eli</small><strong>3005426618</strong></span><span class="tap">Copiar</span></button>
         <button class="payrow" type="button" data-c="02300008571"><span><small>Bancolombia ahorros · Moka Media</small><strong>02300008571</strong></span><span class="tap">Copiar</span></button>
         <button class="payrow" type="button" data-c="3005426618"><span><small>Nequi o Daviplata · Camila Gómez</small><strong>3005426618</strong></span><span class="tap">Copiar</span></button>
       </div>
-      <label class="q" for="amt">¿Cuánto aportaste? <span style="font-weight:400;color:var(--muted)">(opcional)</span></label>
-      <input class="amt" id="amt" inputmode="numeric" autocomplete="off" placeholder="Escribe el valor">
-      <span class="q">Foto del comprobante <span style="font-weight:400;color:var(--muted)">(opcional)</span></span>
+      <span class="q">Foto del comprobante <span style="font-weight:400;color:var(--muted)">(para abrir tu regalo)</span></span>
       <label class="photo" for="foto">
         <input type="file" id="foto" accept="image/*">
         <span class="cam" id="cam"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
-        <span id="foto-txt">Subir foto<small>Solo la ve Chef Eli. No es obligatoria.</small></span>
+        <span id="foto-txt">Subir foto<small>Solo la ve Chef Eli.</small></span>
       </label>
       <span class="q" id="q-medio">¿Por dónde?</span>
       <div class="chips" id="medios" role="group" aria-labelledby="q-medio">
@@ -277,9 +295,11 @@ footer .sig{font:600 28px/1 var(--f-hand);color:var(--ink);display:block;margin-
     </div>
     <div class="thanks" id="thanks" hidden>
       <div class="hand">¡Gracias de corazón!</div>
-      <p>Con tu aporte sigo cocinando para ti. Que te queden deliciosas.</p>
+      <p id="th-msg">Con tu aporte sigo cocinando para ti. Que te queden deliciosas.</p>
       <div class="actions">
         <a class="btn btn-main" id="gift" target="_blank" rel="noopener" hidden>Abrir mi regalo</a>
+        <a class="btn btn-main" id="gift2" target="_blank" rel="noopener" hidden>Abrir mi recetario extra</a>
+        <button class="btn btn-main" id="addfoto" type="button" hidden>Subir mi comprobante</button>
         <button class="btn btn-ghost" id="back" type="button">Volver a los recetarios</button>
       </div>
     </div>
@@ -288,15 +308,20 @@ footer .sig{font:600 28px/1 var(--f-hand);color:var(--ink);display:block;margin-
 <div class="toast" id="toast" hidden role="status"></div>
 
 <script>
-const PACKS = [{"id": "cena", "corto": "Cena de Año Nuevo", "regalo": "https://drive.google.com/file/d/15oTNib8aUgLRO4EQXhnheiCgmqwnfdni/view", "regalo_nombre": "Mis metas 2027"}, {"id": "proteico", "corto": "Regla de los 30 Gramos", "regalo": "https://drive.google.com/file/d/1k9umdOovEihwIWj5skXgHId0cmZOFXGG/view", "regalo_nombre": "Listas de mercado del mes"}, {"id": "airfryer", "corto": "Cenas en Air Fryer", "regalo": "", "regalo_nombre": ""}];
+const PACKS = [{"id": "cena", "corto": "Cena de Año Nuevo", "regalo": "https://drive.google.com/file/d/15oTNib8aUgLRO4EQXhnheiCgmqwnfdni/view", "regalo_nombre": "Mis metas 2027"}, {"id": "proteico", "corto": "Regla de los 30 Gramos", "regalo": "https://drive.google.com/file/d/1k9umdOovEihwIWj5skXgHId0cmZOFXGG/view", "regalo_nombre": "Listas de mercado del mes"}, {"id": "airfryer", "corto": "Cenas en Air Fryer", "regalo": "https://drive.google.com/file/d/1k9umdOovEihwIWj5skXgHId0cmZOFXGG/view", "regalo_nombre": "Listas de mercado del mes"}];
 const REGISTRO_URL = "https://script.google.com/macros/s/AKfycbxcPw0UEqP2_C6KtMMFjcugIGs0RdLCOM7LjA3C9YmuEH_uO7rkDunmN69Nmh3nJIi5Tg/exec"; // web app de Apps Script que escribe en la hoja "Aportes orgánico"
 const POPUP_MS = 6000;
+const EXTRA_MIN = 35000;
+const EXTRA = { cena: ["https://drive.google.com/file/d/1_kDnm9bACrLdnqjejrCm1LMHQLmw0RDT/view", "Postres en air fryer"],
+  proteico: ["https://drive.google.com/file/d/1_kDnm9bACrLdnqjejrCm1LMHQLmw0RDT/view", "Postres en air fryer"],
+  airfryer: ["https://drive.google.com/file/d/1mL9mNaH2oGElLbkAhuKBtULNwJvHWpPz/view", "Comer poquito, proteína alta"] };
 let current = null, amount = null, medio = null, timer = null;
 const $ = id => document.getElementById(id);
 const fmt = n => "$" + Number(n).toLocaleString("es-CO");
 const ready = u => u && u.indexOf("PENDIENTE") === -1;
 
 function toast(msg){ const t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(t._h); t._h = setTimeout(() => t.hidden = true, 2600); }
+function press2(el){ document.querySelectorAll(".amtb").forEach(c => c.setAttribute("aria-pressed", String(c === el))); }
 function press(group, el){ group.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", String(c === el))); }
 
 let away = false, foto = null;
@@ -336,7 +361,7 @@ function openSheet(){
   clearTimeout(timer);
   $("ask").hidden = false; $("thanks").hidden = true;
   amount = null; medio = null; foto = null; $("amt").value = ""; $("foto").value = ""; press($("medios"), null);
-  $("cam").innerHTML = $("cam").dataset.icon || ($("cam").dataset.icon = $("cam").innerHTML); $("foto-txt").innerHTML = "Subir foto<small>Solo la ve Chef Eli. No es obligatoria.</small>";
+  $("cam").innerHTML = $("cam").dataset.icon || ($("cam").dataset.icon = $("cam").innerHTML); $("foto-txt").innerHTML = "Subir foto<small>Solo la ve Chef Eli.</small>"; press2(null); $("amt").hidden = true;
   $("veil").hidden = false; $("done").focus({ preventScroll: true });
 }
 function closeSheet(){ $("veil").hidden = true; }
@@ -344,7 +369,10 @@ $("later").onclick = closeSheet; $("back").onclick = closeSheet;
 $("veil").addEventListener("click", e => { if (e.target === $("veil")) closeSheet(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 $("medios").addEventListener("click", e => { const b = e.target.closest(".chip"); if (!b) return; medio = b.dataset.m; press($("medios"), b); });
-$("amt").addEventListener("input", e => { const n = parseInt(e.target.value.replace(/\D/g, "")); amount = n || null; });
+$("amt").addEventListener("input", e => { const n = parseInt(e.target.value.replace(/\D/g, "")); amount = n || null; press2(null); });
+$("amts").addEventListener("click", e => { const b = e.target.closest(".amtb"); if (!b) return; amount = Number(b.dataset.v); press2(b); $("amt").hidden = true; $("amt").value = ""; });
+$("other").addEventListener("click", () => { press2(null); amount = null; $("amt").hidden = false; $("amt").focus(); });
+$("addfoto").addEventListener("click", () => { $("ask").hidden = false; $("thanks").hidden = true; $("foto").click(); });
 
 document.querySelectorAll(".payrow").forEach(row => row.addEventListener("click", () => {
   const ok = () => { row.classList.add("copied"); row.querySelector(".tap").textContent = "¡Copiado!"; setTimeout(() => { row.classList.remove("copied"); row.querySelector(".tap").textContent = "Copiar"; }, 1800); };
@@ -355,8 +383,16 @@ document.querySelectorAll(".payrow").forEach(row => row.addEventListener("click"
 $("done").addEventListener("click", () => {
   log("aporte", { valor: amount || "", medio: medio || "", foto: foto || "" });
   $("ask").hidden = true; $("thanks").hidden = false;
-  const g = $("gift");
-  if (ready(current.regalo)) { g.href = current.regalo; g.textContent = "Abrir mi regalo: " + current.regalo_nombre; g.hidden = false; } else g.hidden = true;
+  const g = $("gift"), g2 = $("gift2"), ex = EXTRA[current.id];
+  g.hidden = true; g2.hidden = true; $("addfoto").hidden = true;
+  if (foto) {
+    $("th-msg").textContent = "Con tu aporte sigo cocinando para ti. Aquí está tu regalo:";
+    if (ready(current.regalo)) { g.href = current.regalo; g.textContent = "Abrir mi regalo: " + current.regalo_nombre; g.hidden = false; }
+    if (ex && amount && amount >= EXTRA_MIN) { g2.href = ex[0]; g2.textContent = "Abrir mi recetario extra: " + ex[1]; g2.hidden = false; }
+  } else {
+    $("th-msg").textContent = "Cuando subas la foto de tu comprobante se abre tu regalo (y, desde $35.000, tu recetario extra).";
+    $("addfoto").hidden = false;
+  }
 });
 
 function log(tipo, extra){
